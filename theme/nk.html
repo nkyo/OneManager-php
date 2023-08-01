@@ -788,11 +788,21 @@
     }
 <!--WriteTimezoneEnd-->
     function CopyAllDownloadUrl(str) {
+        var linkobj;
         var tmptextarea=document.createElement('textarea');
         document.body.appendChild(tmptextarea);
         tmptextarea.setAttribute('style','position:absolute;left:-100px;width:0px;height:0px;');
         document.querySelectorAll(str).forEach(function (e) {
-            tmptextarea.innerHTML+=e.href+"\r\n";
+            fetch(`https://nkg.one/dl/rest/v3/short-urls/shorten?apiKey=cea592df-aaac-4682-a063-31be3ef78799&longUrl=${e.href}&format=txt`)
+            .then(res => res.text())
+            .then(data => {
+                linkobj = data;
+            })
+            .then(() => {
+                console.log(linkobj);
+                tmptextarea.innerHTML+="->"+linkobj+"\r\n";
+            });
+            //tmptextarea.innerHTML+="->"+e.href+"\r\n";
         });
         tmptextarea.select();
         tmptextarea.setSelectionRange(0, tmptextarea.value.length);
