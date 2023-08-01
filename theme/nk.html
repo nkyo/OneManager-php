@@ -798,7 +798,11 @@
             .then(data => {
                 linkobj = data;
             })
-            tmptextarea.innerHTML+=linkobj+"\r\n";
+            .then(() => {
+                console.log(linkobj);
+                tmptextarea.innerHTML+="->"+linkobj+"\r\n";
+            });
+            tmptextarea.innerHTML+="->"+e.href+"\r\n";
         });
         tmptextarea.select();
         tmptextarea.setSelectionRange(0, tmptextarea.value.length);
